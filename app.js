@@ -3,12 +3,31 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var cors = require('cors')
+const mongoose = require('mongoose');
+
+const databaseUrl = "mongodb://localhost:27017/partyMaker"
+const databaseOptions = {
+    useNewUrlParser : true
+};
+
+
+mongoose.connect(databaseUrl, databaseOptions);
+mongoose.connection.on("open", function(){
+    console.log("MongoDB connection openned");
+});
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users.routes');
+var companiesRouter = require('./routes/companies.routes')
+var meetingsRouter = require('./routes/meetings.routes')
+var packsRouter = require('./routes/packs.routes')
+
+
 
 var app = express();
 
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -21,6 +40,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/companies', companiesRouter);
+app.use('/packs', packsRouter);
+app.use('/meetings', meetingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
