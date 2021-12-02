@@ -10,6 +10,7 @@ const companySchema = new mongoose.Schema(
         },
         description: String,
         city: String,
+        phone:String,
         state: String,
         address: String,
         rating: String,
@@ -23,7 +24,7 @@ const companySchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        capacity: Number,
+        capacity: String,
         category: mongoose.Schema.Types.ObjectId
     }
 );

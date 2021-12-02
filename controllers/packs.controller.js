@@ -26,10 +26,10 @@ async function createNewPack(req, res){
     try {
         if(name && description && cost && companyId){
             const newPack = await new Pack({
-                "name": name,
-                "description": description,
-                "cost": cost,
-                "company": companyId
+                name: name,
+                description: description,
+                cost: cost,
+                company: companyId
             }).save();
             if(newUser && newUser.length >0){
                 return res.status(200).json({"success": true, "data": newPack});
@@ -52,10 +52,10 @@ async function updatePack(req, res){
     try {
         if(packId && name && description && cost && companyId){
             const updatedPack = await Pack.updateOne({"_id": packId},{
-                "name": name,
-                "description": description,
-                "cost": cost,
-                "company": companyId
+                name: name,
+                description: description,
+                cost: cost,
+                company: companyId
             });
 
             return res.status(200).json({"success": true, "data": updatedPack});

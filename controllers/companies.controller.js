@@ -71,16 +71,16 @@ async function signUpCompany(req, res){
     try {
         if(name && lastName && email && password){
             const newCompany = await new Company({
-                "name": name,
-                "description": "",
-                "email": email,
-                "password": password,
-                "phone": "",
-                "city": city,
-                "state": state,
-                "address": address,
-                "capacity": "",
-                "category": ""
+                name: name,
+                description: "",
+                email: email,
+                password: password,
+                phone: "",
+                city: city,
+                state: state,
+                address: address,
+                capacity: "",
+                category: ""
             }).save();
     
             if(newCompany && newCompany.length >0){
@@ -99,19 +99,20 @@ async function signUpCompany(req, res){
 }
 
 async function updateCompany(req, res){
-    const {companyId, name, lastName, email, password, phone, city, state, address} = req.body;
+    const {companyId, name, lastName, email, password, phone, city, state, capacity, address} = req.body;
 
     try {
-        if(name && lastName && email && password && phone && city && state && address){
+        if(name && lastName && email && password && phone && city && state && address && capacity){
             const updatedCompany = await Company.updateOne({"_id": companyId}, {
-                "name": name,
-                "lastName": lastName,
-                "email": email,
-                "password": password,
-                "phone": phone,
-                "city": city,
-                "state": state,
-                "address": address
+                name: name,
+                lastName: lastName,
+                email: email,
+                password: password,
+                phone: phone,
+                city: city,
+                state: state,
+                address: address,
+                capacity: capacity
             })
     
             if(updatedCompany){
