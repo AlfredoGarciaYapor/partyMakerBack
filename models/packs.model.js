@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+// const { Company } = require('./companies.model')
 
 const packsSchema = new mongoose.Schema(
     {
@@ -14,8 +15,9 @@ const packsSchema = new mongoose.Schema(
             type:Number,
             required: true
         },
-        companyId:{
+        company:{
             type:mongoose.Schema.Types.ObjectId,
+            ref: 'Company',
             required: true
         }
     }
