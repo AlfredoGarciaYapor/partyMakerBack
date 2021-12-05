@@ -12,11 +12,11 @@ const packsSchema = new mongoose.Schema(
             required:true
         },
         cost:{
-            type:Number,
+            type:String,
             required: true
         },
         company:{
-            type:mongoose.Schema.Types.ObjectId,
+            type:String,
             ref: 'Company',
             required: true
         }

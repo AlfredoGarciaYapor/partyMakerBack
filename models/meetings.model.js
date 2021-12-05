@@ -7,17 +7,17 @@ const meetingsSchema = new mongoose.Schema(
             required:true
         },
         user:{
-            type:mongoose.Schema.Types.ObjectId,
+            type:String,
             ref: 'User',
             required:true
         },
         company:{
-            type:mongoose.Schema.Types.ObjectId,
+            type:String,
             ref: 'Company',
             required:true
         },
         pack:{
-            type:mongoose.Schema.Types.ObjectId,
+            type:String,
             ref: 'Pack',
             required:true
         },

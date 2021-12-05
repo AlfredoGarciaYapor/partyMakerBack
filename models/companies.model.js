@@ -25,7 +25,7 @@ const companySchema = new mongoose.Schema(
             required: true
         },
         capacity: String,
-        category: mongoose.Schema.Types.ObjectId
+        category: String
     }
 );
 

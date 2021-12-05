@@ -81,7 +81,7 @@ async function removeUser(req, res){
     const{adminId, userId} = req.body;
 
     try {
-        if(userId && adminId==1234){
+        if(userId && adminId=="61a8ae49482015eba2a92bea"){
             const deletedUser = await User.deleteOne({"_id": userId});
 
             if(deletedUser){
@@ -90,7 +90,7 @@ async function removeUser(req, res){
                 return res.status(204).json({"success": true, "data": []});
             }
         }else{
-            return res.status(400).json({"success": true, "message": "Error BadRequest: variable(s) faltante(s)"});
+            return res.status(400).json({"success": true, "message": "Error BadRequest: No eres admin o hay variable(s) faltante(s)"});
         }
     } catch (err) {
         console.log(err);

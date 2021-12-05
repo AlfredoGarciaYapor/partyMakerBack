@@ -40,9 +40,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/companies', companiesRouter);
-app.use('/packs', packsRouter);
+app.use('/users', usersRouter);//jalan todas las rutas
+app.use('/companies', companiesRouter);//jalan todas las rutas
+app.use('/packs', packsRouter);//jalan todas las rutas
 app.use('/meetings', meetingsRouter);
 app.use('/auth', authRouter);
 

@@ -6,11 +6,17 @@ async function getPacks(req, res){
     console.log(req.body);
 
     try {
-        const packsList = await Pack.find({'company' : companyId}).populate('company').select('name description cost')
-        if ( packsList && packsList.length > 0 ) {
-            res.status(200).json({"success": true, "data": packsList});
+        if(companyId){
+            const packsList = await Pack.find({"company": companyId}).populate('company', 'name description phone address email rating city state');
+            
+            console.log('%c⧭', 'color: #00e600', packsList);
+            if ( packsList ) {
+                res.status(200).json({"success": true, "data": packsList});
+            }else{
+                return res.status(204).json({"success": true, "data": []});
+            }
         }else{
-            return res.status(204).json({"success": true, "data": []});
+            return res.status(400).json({"success": true, "message": "Error BadRequest: variable(s) faltante(s)"});
         }
     } catch (err) {
         console.log(err);
@@ -31,7 +37,7 @@ async function createNewPack(req, res){
                 cost: cost,
                 company: companyId
             }).save();
-            if(newUser && newUser.length >0){
+            if(newPack){
                 return res.status(200).json({"success": true, "data": newPack});
             }else{
                 return res.status(204).json({"success": true, "data": []});

@@ -31,9 +31,9 @@ async function getCompanyInfo(req, res){
 async function getCompanies(req, res){
 
     try{
-        const companyInfo = await Company.find({}, 'name description phone city state address rating capacity category');
+        const companyInfo = await Company.find().select('name description phone city state address email rating capacity category');
     
-        if(companyInfo && companyInfo.length > 0){
+        if(companyInfo){
             res.status(200).json({"success": true, "data": companyInfo});
         }else{
             res.status(204).json({"success": true, "data": []});
@@ -51,7 +51,7 @@ async function getCompany(req, res){
             const companyInfo = await Company.findOne({"email": email, "password": password}, 'name description email password phone city state address rating capacity category');
             if (companyInfo == null) {
                 return res.status(401).json({"message": "Información incorrecta en el inicio de sesión"});
-            }else if(companyInfo && companyInfo.length > 0){
+            }else if(companyInfo){
                 res.status(200).json({"success": true, "data": companyInfo});
             }else{
                 res.status(204).json({"success": true, "data": []});
@@ -68,8 +68,10 @@ async function getCompany(req, res){
 
 async function signUpCompany(req, res){
     const { name, email, password, city, state, address} = req.body;
+    // const { name, email, password, address} = req.body;
+    console.log(req.body);
     try {
-        if(name && lastName && email && password){
+        if(name && email && password  && address){
             const newCompany = await new Company({
                 name: name,
                 description: "",
@@ -79,11 +81,12 @@ async function signUpCompany(req, res){
                 city: city,
                 state: state,
                 address: address,
+                rating:"",
                 capacity: "",
                 category: ""
             }).save();
     
-            if(newCompany && newCompany.length >0){
+            if(newCompany != null){
                 return res.status(200).json({"success": true, "data": newCompany});
             }else{
                 return res.status(204).json({"success": true, "data": []});
@@ -99,20 +102,22 @@ async function signUpCompany(req, res){
 }
 
 async function updateCompany(req, res){
-    const {companyId, name, lastName, email, password, phone, city, state, capacity, address} = req.body;
+    const {companyId, name, description, email, password, phone, city, state, capacity, address, rating, category} = req.body;
 
     try {
-        if(name && lastName && email && password && phone && city && state && address && capacity){
-            const updatedCompany = await Company.updateOne({"_id": companyId}, {
+        if(name && description && email && password && phone && city && state && address && capacity && rating && category){
+            const updatedCompany = await Company.updateOne({_id: companyId}, {
                 name: name,
-                lastName: lastName,
+                description: description,
                 email: email,
                 password: password,
                 phone: phone,
                 city: city,
                 state: state,
                 address: address,
-                capacity: capacity
+                capacity: capacity,
+                rating: rating,
+                category: category
             })
     
             if(updatedCompany){
@@ -133,7 +138,7 @@ async function removeCompany(req, res){
     const{adminId, companyId} = req.body;
 
     try {
-        if(companyId && adminId==1234){
+        if(companyId && adminId=="61a8ae49482015eba2a92bea"){
             const deletedCompany = await Company.deleteOne({"_id": companyId});
 
             if(deletedCompany){
@@ -142,7 +147,7 @@ async function removeCompany(req, res){
                 return res.status(204).json({"success": true, "data": []});
             }
         }else{
-            return res.status(400).json({"success": true, "message": "Error BadRequest: variable(s) faltante(s)"});
+            return res.status(400).json({"success": true, "message": "Error BadRequest: No eres admin o hay variable(s) faltante(s)"});
         }
     } catch (err) {
         console.log(err);

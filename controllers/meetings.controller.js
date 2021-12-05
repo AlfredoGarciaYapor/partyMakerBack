@@ -9,7 +9,7 @@ async function getMeetingsCompany(req, res){
             .populate('user', 'name lastName phone email city state address')
             .populate('pack', 'name description cost').select('date user company pack hour');;
         
-            if(meetingList && companyInfo.length > 0){
+            if(meetingList){
                 res.status(200).json({"success": true, "data": meetingList});
             }else{
                 res.status(204).json({"success": true, "data": []});
@@ -49,14 +49,13 @@ async function getMeetingsUser(req, res){
 }
 
 async function createMeeting(req, res) {
-    const {packId, date, userId, time, companyId, hour} = req.body;
+    const {packId, date, userId, companyId, hour} = req.body;
 
     try {
-        if (packId && date && userId && time && companyId && hour) {
+        if (packId && date && userId && companyId && hour) {
             const newMeeting = await new Meeting({
                 date: date,
                 user: userId,
-                time: time,
                 pack: packId,
                 company: companyId,
                 hour: hour
