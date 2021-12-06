@@ -11,7 +11,7 @@ async function getCompanyInfo(req, res){
 
     try{
         if(companyId){
-            const companyInfo = await Company.find({"_id": companyId}, 'name description phone city state address rating capacity category');
+            const companyInfo = await Company.find({"_id": companyId}, 'name description phone city state address email rating capacity category');
         
             if(companyInfo && companyInfo.length > 0){
                 res.status(200).json({"success": true, "data": companyInfo});
@@ -104,6 +104,8 @@ async function signUpCompany(req, res){
 async function updateCompany(req, res){
     const {companyId, name, description, email, password, phone, city, state, capacity, address, rating, category} = req.body;
 
+
+    console.log('%c⧭', 'color: #aa00ff', req.body);
     try {
         if(name && description && email && password && phone && city && state && address && capacity && rating && category){
             const updatedCompany = await Company.updateOne({_id: companyId}, {
