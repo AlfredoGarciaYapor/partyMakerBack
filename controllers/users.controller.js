@@ -1,5 +1,47 @@
 const { User } = require('../models/users.model');
 
+async function getUsersList(req, res){
+    
+    console.log('%c⧭', 'color: #0088cc', req.body);
+
+    try {
+            const userInfo = await User.find().select('name lastName email password phone city state address');
+        
+            if(userInfo){
+                res.status(200).json({"success": true, "data": userInfo});
+            }else{
+                res.status(204).json({"success": true, "data": []});
+            }
+        
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ "message": "Error in the server"});
+    }
+}
+
+async function getUserInfo(req, res){
+    const {userId} = req.body;
+    console.log('%c⧭', 'color: #0088cc', req.body);
+
+    try {
+        if(userId){
+            const userInfo = await User.findOne({"_id": userId}, 'name lastName email password phone city state address');
+        
+            if(userInfo){
+                res.status(200).json({"success": true, "data": userInfo});
+            }else{
+                res.status(204).json({"success": true, "data": []});
+            }
+        }else{
+            return res.status(400).json({ "message": "Error finding user: missing varibles.", "data": []});
+        }
+        
+    } catch (error) {
+        console.log(err);
+        return res.status(400).json({ "message": "Error in the server"});
+    }
+}
+
 async function getUser(req, res){
     const {email, password} = req.body;
 
@@ -102,5 +144,7 @@ module.exports = {
     getUser,
     signUpUser,
     updateUser,
-    removeUser
+    removeUser,
+    getUserInfo,
+    getUsersList
 }

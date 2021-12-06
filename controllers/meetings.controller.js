@@ -80,6 +80,7 @@ async function updateMeeting(req, res){
     const {packId, date, userId,  companyId, hour, meetingId} = req.body;
 
 
+    console.log('%c⧭', 'color: #917399', req.body);
     try {
         if(meetingId && packId && date && userId && companyId && hour){
             console.log('%c⧭', 'color: #e50000', req.body);

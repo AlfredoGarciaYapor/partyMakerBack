@@ -1,5 +1,20 @@
 const { Pack } = require('../models/packs.model')
 
+async function packCatalogue(req, res){
+    try{
+        const packsCatalog = await Pack.find().select('name') 
+
+        if(packsCatalog){
+            return res.status(200).json({"success": true, "data": packsCatalog});
+        }else{
+            return res.status(204).json({"success": true, "data": []});
+        }
+    }catch (err) {
+        console.log(err);
+        return res.status(500).json({ "message": "Error finding packs."});
+    }
+}
+
 async function getPacks(req, res){
     const {companyId} = req.body;
 
@@ -100,5 +115,6 @@ module.exports = {
     getPacks,
     createNewPack,
     updatePack,
-    removePack
+    removePack,
+    packCatalogue
 }
