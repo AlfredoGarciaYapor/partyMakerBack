@@ -69,6 +69,7 @@ async function createNewPack(req, res){
 
 async function updatePack(req, res){
     const {packId, name, description, cost, companyId} = req.body;
+    console.log('%c⧭', 'color: #d90000', req.body);
 
     try {
         if(packId && name && description && cost && companyId){
@@ -92,6 +93,7 @@ async function updatePack(req, res){
 
 async function removePack(req, res){
     const {packId, companyId} = req.body
+    console.log('%c⧭', 'color: #ffa640', req.body);
 
     try {
         if(packId && companyId){
